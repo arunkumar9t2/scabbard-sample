@@ -1,2 +1,15 @@
 include ':app'
 rootProject.name = "Blade"
+
+def localProperties = new Properties().with {
+    load(file("local.properties").newDataInputStream())
+    it
+}
+
+if (localProperties.getProperty("enableDev", "false").toBoolean()) {
+    includeBuild("../../scabbard") {
+        dependencySubstitution {
+            substitute module("dev.arunkumar:scabbard-processor") with project(":scabbard-processor")
+        }
+    }
+}
