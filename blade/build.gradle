@@ -10,7 +10,17 @@ buildscript {
         classpath "com.android.tools.build:gradle:7.0.0"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
+        // Legacy application
+        // classpath "gradle.plugin.dev.arunkumar:scabbard-gradle-plugin:0.4.0"
     }
+}
+
+plugins {
+    id "scabbard.gradle" version "0.4.0"
+}
+
+scabbard {
+    enabled true
 }
 
 allprojects {
