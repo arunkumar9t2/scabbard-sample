@@ -10,13 +10,33 @@ buildscript {
         classpath "com.android.tools.build:gradle:7.0.0"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
+        // Legacy application
+        // classpath "gradle.plugin.dev.arunkumar:scabbard-gradle-plugin:0.5.0"
     }
+}
+
+plugins {
+    id "scabbard.gradle" version "0.5.0"
+}
+
+scabbard {
+    enabled true
+    outputFormat "svg"
 }
 
 allprojects {
     repositories {
         google()
         mavenCentral()
+    }
+
+    configurations.all {
+        resolutionStrategy.eachDependency {
+            if (requested.group == "com.github.kittinunf.result" && requested.name == "result" && requested.version == "3.0.0") {
+                useVersion("3.0.1")
+                because("Transitive dependency of Scabbard, currently not available on mavenCentral()")
+            }
+        }
     }
 }
 
